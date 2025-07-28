@@ -1,0 +1,12 @@
+requests>=2.25.0
+aiohttp
+urllib3
+typing-extensions>=4.0.0;python_version<"3.8"
+
+# Packaging
+setuptools
+
+# Testing
+pytest
+aioresponses
+responses
