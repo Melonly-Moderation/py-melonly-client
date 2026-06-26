@@ -84,6 +84,7 @@ class MelonlyClient:
         endpoint: str,
         params: Optional[Dict[str, Any]] = None,
         json_data: Optional[Dict[str, Any]] = None,
+        is_full_url: bool = False,
     ) -> Dict[str, Any]:
         """
         Make an HTTP request to the API.
@@ -101,6 +102,9 @@ class MelonlyClient:
             MelonlyAPIError: For various API errors
         """
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
+
+        if is_full_url:
+            url = endpoint
         
         try:
             response = self.session.request(
@@ -418,6 +422,10 @@ class MelonlyClient:
             total=data["total"],
             total_pages=data["totalPages"],
         )
+
+    def send_workflow_webhook(self, url: str, body: Dict[str, Any]) -> None:
+        """Send a workflow webhook."""
+        self._make_request("POST", endpoint=url, json_data=body, is_full_url=True)
 
     def __enter__(self):
         """Context manager entry."""
